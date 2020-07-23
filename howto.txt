@@ -1,0 +1,8 @@
+# redirect cobaya stdout and stderr to outlog.log and run in the background
+nohup cobaya-run -f Nur.yaml &> outlog.log &
+
+
+# to install polychord and mpi4py
+module load intel
+module load openmpi
+module load mpi.intel/2019
