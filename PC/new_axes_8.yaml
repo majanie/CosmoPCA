@@ -1,0 +1,160 @@
+likelihood:
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+  planck_2018_highl_plik.TTTEEE: null
+  planck_2018_lensing.clik: null
+params:
+  PC1:
+    prior:
+      min: -0.03240156361957082
+      max: -0.031169078812384163
+    ref:
+      dist: norm
+      loc: -0.031652861060073166
+      scale: 0.00013212948279968677
+    proposal: 2.6425896559937353e-05
+    drop: True
+  PC2:
+    prior:
+      min: 0.9407062614292332
+      max: 0.9433201752630509
+    ref:
+      dist: norm
+      loc: 0.9420613154488865
+      scale: 0.00032979009949310256
+    proposal: 6.59580198986205e-05
+    drop: True
+  PC3:
+    prior:
+      min: -0.9038179591243501
+      max: -0.8913417595107711
+    ref:
+      dist: norm
+      loc: -0.8976023969973478
+      scale: 0.0015534086485746365
+    proposal: 0.0003106817297149273
+    drop: True
+  PC4:
+    prior:
+      min: 1.3550019759953542
+      max: 1.3719971560401567
+    ref:
+      dist: norm
+      loc: 1.364572155385706
+      scale: 0.002244567216841651
+    proposal: 0.00044891344336833017
+    drop: True
+  PC5:
+    prior:
+      min: 0.24703885216530694
+      max: 0.2840202279089347
+    ref:
+      dist: norm
+      loc: 0.26513216641106263
+      scale: 0.004871420566626058
+    proposal: 0.0009742841133252116
+    drop: True
+  PC6:
+    prior:
+      min: 0.8946490829484516
+      max: 0.981627642456761
+    ref:
+      dist: norm
+      loc: 0.948075303329077
+      scale: 0.011793142026680335
+    proposal: 0.002358628405336067
+    drop: True
+  PC7:
+    prior:
+      min: 1.2405788270602547
+      max: 1.7977021844243373
+    ref:
+      dist: norm
+      loc: 1.5492943570414777
+      scale: 0.06670047441045422
+    proposal: 0.013340094882090845
+    drop: True
+  PC8:
+    prior:
+      min: -3.3957886685325662
+      max: -2.1880524044443432
+    ref:
+      dist: norm
+      loc: -2.7572907142154186
+      scale: 0.16332562772756756
+    proposal: 0.03266512554551351
+    drop: True
+  PC9:
+    value: -0.631006357533925
+    drop: True
+  omega_b:
+    value: import_module('external_functions').get_omega_b
+  omega_cdm:
+    value: import_module('external_functions').get_omega_cdm
+  n_s:
+    value: import_module('external_functions').get_n_s
+  tau_reio:
+    value: import_module('external_functions').get_tau_reio
+  Omega_k:
+    value: import_module('external_functions').get_Omega_k
+  m_ncdm:
+    value: import_module('external_functions').get_m_ncdm
+  N_ur:
+    value: import_module('external_functions').get_N_ur
+  100*theta_s:
+    value: import_module('external_functions').get_theta_s_1e2
+    derived: false
+  A_s:
+    value: import_module('external_functions').get_A_s
+  H0:
+    latex: H_0
+  Omega_m:
+    latex: \Omega_\mathrm{m}
+  omegamh2:
+    derived: 'lambda Omega_m, H0: Omega_m*(H0/100)**2'
+    latex: \Omega_\mathrm{m} h^2
+  Omega_Lambda:
+    latex: \Omega_\Lambda
+  YHe:
+    latex: Y_\mathrm{P}
+  z_reio:
+    latex: z_\mathrm{re}
+  sigma8:
+    latex: \sigma_8
+  s8h5:
+    derived: 'lambda sigma8, H0: sigma8*(H0*1e-2)**(-0.5)'
+    latex: \sigma_8/h^{0.5}
+  s8omegamp5:
+    derived: 'lambda sigma8, Omega_m: sigma8*Omega_m**0.5'
+    latex: \sigma_8 \Omega_\mathrm{m}^{0.5}
+  s8omegamp25:
+    derived: 'lambda sigma8, Omega_m: sigma8*Omega_m**0.25'
+    latex: \sigma_8 \Omega_\mathrm{m}^{0.25}
+  A:
+    derived: 'lambda A_s: 1e9*A_s'
+    latex: 10^9 A_\mathrm{s}
+  clamp:
+    derived: 'lambda A_s, tau_reio: 1e9*A_s*np.exp(-2*tau_reio)'
+    latex: 10^9 A_\mathrm{s} e^{-2\tau}
+  age:
+    latex: '{\rm{Age}}/\mathrm{Gyr}'
+  rs_drag:
+    latex: r_\mathrm{drag}
+  chi2__CMB:
+    derived: 'lambda chi2__planck_2018_lowl_TT, chi2__planck_2018_lowl_EE, chi2__planck_2018_highl_plik_TTTEEE,
+      chi2__planck_2018_lensing_clik: sum([chi2__planck_2018_lowl_TT, chi2__planck_2018_lowl_EE,
+      chi2__planck_2018_highl_plik_TTTEEE, chi2__planck_2018_lensing_clik])'
+    latex: \chi^2_\mathrm{CMB}
+prior:
+  original: import_module('external_functions').external_prior
+sampler:
+  mcmc:
+    covmat: auto
+    drag: true
+    proposal_scale: 1.9
+theory:
+  classy:
+    extra_args:
+      N_ncdm: 1
+modules:
+  /home/moon/mniemeyer/cobaya_modules
